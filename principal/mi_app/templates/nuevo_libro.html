@@ -1,0 +1,17 @@
+{% extends 'layout/base.html'%}
+
+{% block content %}
+    {% include 'partials/navbar.html'%}
+        <p>Nuevo autor</p>
+        <br>
+        <div style="width: 40%; margin: auto;">
+            <form action="" method="post" >
+                {% csrf_token %}
+                {{form_libro}}
+                <button class="button is-success-ligth" type="submit">Guardar</button>
+            </form>
+        </div>
+        
+
+    {% include 'partials/footer.html'%}
+{% endblock %}

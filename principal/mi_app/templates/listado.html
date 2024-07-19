@@ -1,0 +1,67 @@
+{% extends 'layout/base.html'%}
+
+{% block content %}
+    {% include 'partials/navbar.html'%}
+    
+        <p style="padding-left: 5%;">LISTADO</p>
+        <br>
+        <div  style="width: 90vw; margin: auto;">
+          {% if autores %}
+          <!--Barra de busqueda-->
+          <form action="" method="get">
+            {% include 'partials/barra_de_busqueda.html'%}
+          </form>
+            <table class="table"  >
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Titulo</th>
+                    <th>Descripcion</th>
+                    <th>Fecha publicacion</th>
+                    <th>Genero</th>
+                    <th>Imagen</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                    <th>Nuevo libro</th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                    {% for autor in autores %}
+                        {% for libro in autor.libro.all %}
+
+                  <tr>
+                    <td>{{autor.id}}</td>
+                    <td>{{autor.nombre}}</td>
+                    <td>{{libro.titulo}}</td>
+                    <td>{{libro.descripcion}}</td>
+                    <td>{{libro.fecha_publicacion}}</td>
+                    <td>{{libro.genero}}</td>
+                    {% if libro.imagen %}
+                    <td> <img src=" {{libro.imagen.url}}" alt="{{libro.titulo}}" style="width:46px; height:auto"  > </td>
+                    {% else %}
+                    no hay Imagen
+                    {% endif %}
+                    <td><a href="{% url 'editar_autor' autor.id libro.id %}">Editar</a></td>
+                    <td><a href="{% url 'eliminar_autor' autor.id %}">Eliminar</a></td>
+                    <td><a href="{% url 'nuevo_libro' autor.id %}">Ir</a></td>
+                  </tr>
+                  {% endfor %}
+                {% endfor %}
+                
+                </tbody>
+                
+              </table>
+            {% else %}
+            <div style="min-height: 100vh; text-align: center; margin: auto;">
+              <p>No existen datos aun.</p>
+              <p>Desea añadir un autor? <a href="{% url 'nuevo_autor' %}">Añadir </a></p>
+            </div>
+            
+            {% endif %}
+          </div>
+        
+
+    {% include 'partials/footer.html'%}
+{% endblock %}

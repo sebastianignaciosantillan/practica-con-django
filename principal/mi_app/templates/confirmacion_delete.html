@@ -1,0 +1,28 @@
+{% extends 'layout/base.html'%}
+
+{% block content %}
+    {% include 'partials/navbar.html'%}
+    <div class="container" style="display: flex; align-items: center; justify-content: center; min-height: 80vh;">
+        <div class="box" style="width: 40%; background-color: rgb(94, 84, 84); border-radius: 3%; color: white;">
+            <p class="has-text-centered">¿Está seguro de querer eliminar el autor {{ autor.nombre }}?</p>
+            <br>
+            <form action="" method="post" style="text-align: center;">
+                {% csrf_token %}
+                <div style="display: flex; justify-content: space-around;">
+                    <button class="button is-info" type="submit">Eliminar</button>
+                    <a  onclick="goBack()" class="button is-danger">Finalizar</a>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    <script>
+        function goBack(){
+            window.history.back();
+        }
+    </script>
+       
+        
+
+    {% include 'partials/footer.html'%}
+{% endblock %}

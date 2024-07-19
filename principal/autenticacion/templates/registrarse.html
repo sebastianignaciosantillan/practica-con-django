@@ -1,0 +1,79 @@
+{% extends 'layout/base.html'%}
+
+{% block content %}
+    {% include 'partials/navbar.html'%}
+    
+        <br>
+        <div style=" margin: auto; width: 60%"> 
+            <form method="post">
+                {% csrf_token %}
+                <div class="field">
+                    <label class="label">{{ form.username.label }}</label>
+                    <div class="control">
+                        {{ form.username }}
+                    </div>
+                    {% if form.username.errors %}
+                        <p class="help is-danger">{{ form.username.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.first_name.label }}</label>
+                    <div class="control">
+                        {{ form.first_name }}
+                    </div>
+                    {% if form.first_name.errors %}
+                        <p class="help is-danger">{{ form.first_name.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.last_name.label }}</label>
+                    <div class="control">
+                        {{ form.last_name }}
+                    </div>
+                    {% if form.last_name.errors %}
+                        <p class="help is-danger">{{ form.last_name.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.email.label }}</label>
+                    <div class="control">
+                        
+                        {{ form.email }}
+                    </div>
+                    {% if form.email.errors %}
+                        <p class="help is-danger">{{ form.email.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.password1.label }}</label>
+                    <p class="control has-icons-left">
+                        {{ form.password1 }}
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                    {% if form.password1.errors %}
+                        <p class="help is-danger">{{ form.password1.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="field">
+                    <label class="label">{{ form.password2.label }}</label>
+                    <p class="control has-icons-left">
+                        {{ form.password2 }}
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </p>
+                    {% if form.password2.errors %}
+                        <p class="help is-danger">{{ form.password2.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-primary">Registrarse</button>
+                </div>
+            </form>
+        </div>
+   
+
+    {% include 'partials/footer.html'%}
+{% endblock %}

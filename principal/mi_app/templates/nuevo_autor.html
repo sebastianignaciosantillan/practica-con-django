@@ -1,0 +1,90 @@
+{% extends 'layout/base.html'%}
+
+{% block content %}
+    {% include 'partials/navbar.html'%}
+    <div style="margin: auto;">
+        <p><strong>Nuevo Autor</strong></p>
+    </div>
+    <br>
+    <div style="width: 40%; margin: auto;">
+        {% load crispy_forms_filters %}
+        {% load crispy_forms_tags %}
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="field">
+                <label class="label" for="id_nombre">Nombre</label>
+                <div class="control">
+                    {{ form_autor.nombre }}
+                </div>
+                {% if form_autor.nombre.errors %}
+                    <p class="help is-danger">{{ form_autor.nombre.errors }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="field">
+                <label class="label" for="id_edad">Edad</label>
+                <div class="control">
+                    {{ form_autor.edad }}
+                </div>
+                {% if form_autor.edad.errors %}
+                    <p class="help is-danger">{{ form_autor.edad.errors }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="field">
+                <label class="label" for="id_titulo">Título</label>
+                <div class="control">
+                    {{ form_libro.titulo }}
+                </div>
+                {% if form_libro.titulo.errors %}
+                    <p class="help is-danger">{{ form_libro.titulo.errors }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="field">
+                <label class="label" for="id_descripcion">Descripción</label>
+                <div class="control">
+                    {{ form_libro.descripcion }}
+                </div>
+                {% if form_libro.descripcion.errors %}
+                    <p class="help is-danger">{{ form_libro.descripcion.errors }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="field">
+                <label class="label" for="id_fecha_publicacion">Fecha de Publicación</label>
+                <div class="control">
+                    {{ form_libro.fecha_publicacion }}
+                </div>
+                {% if form_libro.fecha_publicacion.errors %}
+                    <p class="help is-danger">{{ form_libro.fecha_publicacion.errors }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="field">
+                <label class="label" for="id_genero">Género</label>
+                <div class="control select is-info">
+                    {{ form_libro.genero }}
+                </div>
+                {% if form_libro.genero.errors %}
+                    <p class="help is-danger">{{ form_libro.genero.errors }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="file">
+                <label class="label" for="id_imagen">Imagen</label>
+                <div class="control">
+                    {{ form_libro.imagen }}
+                </div>
+                {% if form_libro.imagen.errors %}
+                    <p class="help is-danger">{{ form_libro.imagen.errors }}</p>
+                {% endif %}
+            </div>
+            
+            <div class="control">
+                <button type="submit" class="button is-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+    {% include 'partials/footer.html'%}
+{% endblock %}
