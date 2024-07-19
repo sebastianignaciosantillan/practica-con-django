@@ -3,6 +3,9 @@ from .models import Autor, Libro
 from .forms import AutorForm, LibroForm
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django.db import transaction
+from django.contrib import messages
+
 
 # Create your views here.
 def index(request):
@@ -40,19 +43,29 @@ def nuevo_autor(request):
     return render(request, 'nuevo_autor.html', {'form_autor':form_autor, 'form_libro':form_libro})
 
 
-def nuevo_libro(request, autor_id):
-    autor = Autor.objects.get(id = autor_id)
+
+def nuevo_libro(request):
     if request.method == 'POST':
-        form_libro = LibroForm(request.POST)
-        if form_libro.is_valid():
-            libro = form_libro.save(commit =False) #instancia incompleta
-            libro.autor = autor
-            libro.save() # persiste finalmente
-            return redirect('listado')
-            
+        autor_form = AutorForm(request.POST)
+        libro_form = LibroForm(request.POST)
+        if autor_form.is_valid() and libro_form.is_valid():
+            try:
+                with transaction.atomic():
+                    autor = autor_form.save()
+                    libro = libro_form.save(commit=False)
+                    libro.autor = autor
+                    libro.save()
+                messages.success(request, 'El libro ha sido creado con éxito.')
+                return redirect('lista_libros')  # Redirige a la lista de libros o a cualquier otra página
+            except Exception:
+                messages.error(request, 'Hubo un problema al guardar el libro. Inténtalo de nuevo.')
+        else:
+            messages.error(request, 'Por favor corrige los errores en el formulario.')
     else:
-        form_libro = LibroForm()
-    return render(request, 'nuevo_libro.html', {'form_libro':form_libro})
+        autor_form = AutorForm()
+        libro_form = LibroForm()
+    return render(request, 'crear_libro.html', {'autor_form': autor_form, 'libro_form': libro_form})
+
 
 def editar_autor(request, autor_id, libro_id):
     autor = get_object_or_404(Autor, id=autor_id)
